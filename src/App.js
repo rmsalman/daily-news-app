@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import SearchBar from './components/SearchBar';
+import ArticleList from './components/ArticleList';
+import { getArticles } from './services/api';
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+    const [articles, setArticles] = useState([]);
+    const [loading, setLoading] = useState(false);
+    
+    const handleSearch  = async (params) => {
+        setLoading(true);
+        try {
+            const fetchedArticles = await getArticles(params);
+            setArticles(fetchedArticles);
+        } catch (error) {
+            console.error('Error fetching articles:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+    
+    return (
+        <div className="container">
+            <h1>News & Articles</h1>
+            <SearchBar onSearch={handleSearch}  />
+
+            {loading ? (
+                <p>Loading...</p>
+            ) : (
+                articles.length ? (<ArticleList articles={articles} />) : 'Wanna see the news? Hit the search button!' 
+            )}
+
+        </div>
+    );
+};
 
 export default App;
