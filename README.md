@@ -21,5 +21,10 @@ A news application built with React.js that allows users to search for articles,
 ### Installation
 1. Clone the repository:
    ```sh
-   git clone https://github.com/yourusername/news-app.git
-   cd news-app
+   git clone https://github.com/rmsalman/innoscripta-challenge.git
+   cd innoscripta-challenge
+
+## Docker
+- docker pull rmsalmandev/daily-news-app:latest
+- docker run -d rmsalmandev/daily-news-app:latest
+- For direct hub link: https://hub.docker.com/r/rmsalmandev/daily-news-app
