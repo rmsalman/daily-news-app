@@ -1,38 +1,20 @@
-import React, { useState } from 'react';
-import SearchBar from './components/SearchBar';
-import ArticleList from './components/ArticleList';
-import { getArticles } from './services/api';
-import "./App.css";
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import Prefrences from "./pages/Prefrences";
+import Navigation from "./components/Navigation";
 
-const App = () => {
-    const [articles, setArticles] = useState([]);
-    const [loading, setLoading] = useState(false);
-    
-    const handleSearch  = async (params) => {
-        setLoading(true);
-        try {
-            const fetchedArticles = await getArticles(params);
-            setArticles(fetchedArticles);
-        } catch (error) {
-            console.error('Error fetching articles:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
-    
-    return (
-        <div className="container">
-            <h1>News & Articles</h1>
-            <SearchBar onSearch={handleSearch}  />
 
-            {loading ? (
-                <p>Loading...</p>
-            ) : (
-                articles.length ? (<ArticleList articles={articles} />) : 'Wanna see the news? Hit the search button!' 
-            )}
-
-        </div>
-    );
-};
+function App() {
+  return (
+    <Router>
+      <Navigation />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/prefrences" element={<Prefrences />} />
+      </Routes>
+    </Router>
+  );
+}
 
 export default App;

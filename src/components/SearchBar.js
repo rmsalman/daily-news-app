@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = ({ onSearch, keywordProp, sourceProp, dateProp }) => {
     const [q, setKeyword] = useState('');
-    const [source, setSource] = useState('guardian');
+    const [source, setSource] = useState('');
     const [date, setDate] = useState('');
+
+    useEffect(() => {
+        setKeyword(keywordProp || '');
+        setSource(sourceProp || 'guardian');
+        setDate(dateProp || '');
+    }, [sourceProp, dateProp, keywordProp]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -23,14 +29,14 @@ const SearchBar = ({ onSearch }) => {
                 </div>
                 <div className="filter-group">
                     <label>Source:</label>
-                    <select id="source" name="source" onChange={(e) => setSource(e.target.value)}>
+                    <select id="source" name="source"  value={source} onChange={(e) => setSource(e.target.value)}>
                     <option  value="guardian">The Guardian</option>
                     <option value="newsapi">NewsAPI</option>
                     <option value="nytimes">New York Times</option>
                 </select>
                 </div>
                 <div className="filter-group filterButton">
-                    <button type="submit">Filter</button>
+                    <button type="submit">{keywordProp ? 'Save Filter' : 'Filter'}</button>
                 </div>
             </form>
         </div>
